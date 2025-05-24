@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transportation Planning</title>
+    <style>
+        /* General page styles */
+        body {
+            font-family: 'Inter', sans-serif; /* Modern font */
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f2f5; /* Light gray background */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh; /* Full viewport height */
+            box-sizing: border-box;
+            position: relative; /* For absolute positioning of the footer */
+        }
+
+        /* Header styles */
+        h2 {
+            color: #2c3e50; /* Dark gray header color */
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+            font-weight: 700;
+        }
+
+        h2 img {
+            margin-right: 15px;
+            height: 40px; /* Truck icon size */
+            width: 40px;
+        }
+
+        /* Main content container */
+        .main-container {
+            display: grid;
+            grid-template-columns: 1fr; /* Single column by default */
+            gap: 25px; /* Space between cards */
+            max-width: 960px; /* Maximum width */
+            width: 100%;
+            padding: 0 10px; /* Side padding */
+        }
+
+        /* Card styles */
+        .card {
+            background-color: #ffffff; /* White card background */
+            padding: 25px;
+            border-radius: 12px; /* More rounded corners */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .card:hover {
+            transform: translateY(-5px); /* Hover effect */
+        }
+
+        /* Form group styles */
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600; /* Bolder labels */
+            color: #34495e; /* Dark label color */
+            font-size: 0.95em;
+        }
+
+        .form-group input {
+            width: calc(100% - 20px); /* Account for padding */
+            padding: 10px;
+            border: 1px solid #dcdfe6; /* Light gray border */
+            border-radius: 8px; /* Rounded input corners */
+            box-sizing: border-box;
+            font-size: 1em;
+            color: #333;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #3498db; /* Blue border on focus */
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2); /* Light blue shadow */
+        }
+
+        /* Specific styling for number inputs */
+        .form-group input[type="number"] {
+            background-color: #f8f9fa; /* Light gray background */
+        }
+
+        /* Button styles */
+        button {
+            padding: 12px 25px;
+            background-color: #28a745; /* Green button */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            width: 100%; /* Full width */
+            box-sizing: border-box;
+            box-shadow: 0 4px 10px rgba(40, 167, 69, 0.2);
+        }
+
+        button:hover {
+            background-color: #218838; /* Darker green on hover */
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        /* Result card styles */
+        #result-card {
+            background-color: #e8f5e9; /* Light green background */
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            grid-column: 1 / -1; /* Span both columns */
+            margin-top: 25px; /* Top margin */
+        }
+
+        #result h3 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+            text-align: center;
+        }
+
+        #result p {
+            color: #555;
+            margin-bottom: 10px;
+            line-height: 1.6;
+            font-size: 1.05em;
+        }
+
+        /* Highlighted result line */
+        #result p.highlight-result {
+            font-size: 1.4em; /* Larger font */
+            font-weight: bold;
+            color: #007bff; /* Blue highlight color */
+            background-color: #e0f2f7; /* Light blue background */
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 123, 255, 0.2); /* Light blue shadow */
+        }
+
+        /* Footer for name */
+        .footer-name {
+            position: absolute;
+            bottom: 10px;
+            right: 20px;
+            font-size: 0.8em; /* Küçük font */
+            color: #999; /* Göze çarpmayan renk */
+        }
+
+        /* Responsive design media queries */
+        @media (min-width: 768px) {
+            .main-container {
+                grid-template-columns: 1fr 1fr; /* Two columns on larger screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <h2><img src="https://www.svgrepo.com/show/183941/dump-truck-truck.svg" alt="Damperli Kamyon İkonu"> Transportation Planning</h2>
+
+    <div class="main-container">
+        <div class="card">
+            <div class="form-group">
+                <label for="bskMiktari">Planned Asphalt Mixture Quantity (tons):</label>
+                <input type="number" id="bskMiktari" step="any" value="2000" required>
+            </div>
+            <div class="form-group">
+                <label for="mesafe">Distance (km):</label>
+                <input type="number" id="mesafe" step="any" value="50" required>
+            </div>
+            <div class="form-group">
+                <label for="gunlukCalismaSuresi">Daily Working Hours (hours):</label>
+                <input type="number" id="gunlukCalismaSuresi" step="any" value="10" required>
+            </div>
+            <div class="form-group">
+                <label for="kamyonHizi">Average Truck Speed (km/hour):</label>
+                <input type="number" id="kamyonHizi" step="any" value="50" required>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="form-group">
+                <label for="kamyonKapasitesi">Average Truck Capacity (tons):</label>
+                <input type="number" id="kamyonKapasitesi" step="any" value="35" required>
+            </div>
+            <div class="form-group">
+                <label for="tabakaKalinligi">Layer Thickness (cm):</label>
+                <input type="number" id="tabakaKalinligi" step="any" value="0.11" required>
+            </div>
+            <div class="form-group">
+                <label for="tabakaGenisligi">Layer Width (m):</label>
+                <input type="number" id="tabakaGenisligi" step="any" value="15.85" required>
+            </div>
+            <div class="form-group">
+                <label for="yogunluk">Density (tons/m³):</label>
+                <input type="number" id="yogunluk" step="any" value="2.4" required>
+            </div>
+        </div>
+
+        <div class="card" style="grid-column: 1 / -1;">
+            <button type="button" onclick="calculate()">Calculate</button>
+        </div>
+
+        <div id="result-card">
+            <div id="result"></div>
+        </div>
+    </div>
+
+    <div class="footer-name">
+        Gokmen Ozgumus
+    </div>
+
+    <script>
+        /**
+         * Performs transportation planning calculations and displays the results.
+         */
+        function calculate() {
+            // Get input values
+            const bskMiktari = parseFloat(document.getElementById('bskMiktari').value);
+            const mesafe = parseFloat(document.getElementById('mesafe').value);
+            const gunlukCalismaSuresi = parseFloat(document.getElementById('gunlukCalismaSuresi').value);
+            const kamyonHizi = parseFloat(document.getElementById('kamyonHizi').value);
+            const kamyonKapasitesi = parseFloat(document.getElementById('kamyonKapasitesi').value);
+            const tabakaKalinligi = parseFloat(document.getElementById('tabakaKalinligi').value);
+            const tabakaGenisligi = parseFloat(document.getElementById('tabakaGenisligi').value);
+            const yogunluk = parseFloat(document.getElementById('yogunluk').value);
+
+            const resultDiv = document.getElementById('result');
+
+            // Error handling: Check if all fields are filled
+            if (isNaN(bskMiktari) || isNaN(mesafe) || isNaN(gunlukCalismaSuresi) ||
+                isNaN(kamyonHizi) || isNaN(kamyonKapasitesi) ||
+                isNaN(tabakaKalinligi) || isNaN(tabakaGenisligi) || isNaN(yogunluk)) {
+                resultDiv.innerHTML = '<p style="color:red; text-align: center;">Please fill in all fields!</p>';
+                return;
+            }
+
+            // Check for negative or zero inputs
+            if (bskMiktari <= 0 || mesafe <= 0 || gunlukCalismaSuresi <= 0 ||
+                kamyonHizi <= 0 || kamyonKapasitesi <= 0 ||
+                tabakaKalinligi <= 0 || tabakaGenisligi <= 0 || yogunluk <= 0) {
+                resultDiv.innerHTML = '<p style="color:red; text-align: center;">Input values cannot be zero or negative!</p>';
+                return;
+            }
+
+            // Fixed values (in minutes)
+            const preparationWaiting = 1; // Preparation and waiting time
+            const loadingTime = 10.294117647058824; // Loading time
+            const weighingDocument = 2; // Weighing and documentation time
+            const pavingSiteWaiting = 4; // Waiting time at paving site
+            const unloadingCleaning = 30.88235294117647; // Unloading and cleaning time
+
+            // Calculations
+            // Total required mixture quantity (tons)
+            const mixtureQuantity = bskMiktari;
+
+            // Hourly mixture quantity (tons/hour)
+            const hourlyMixtureQuantity = bskMiktari / gunlukCalismaSuresi;
+
+            // Total number of truck trips
+            const totalTripCount = mixtureQuantity / kamyonKapasitesi;
+
+            // Travel time to site (minutes)
+            const travelToSite = (mesafe / kamyonHizi) * 60;
+
+            // Return travel time (minutes)
+            const returnTravel = (mesafe / kamyonHizi) * 60;
+
+            // Total duration for one truck trip (minutes)
+            const tripDuration = preparationWaiting + loadingTime + weighingDocument + travelToSite +
+                                        pavingSiteWaiting + unloadingCleaning + returnTravel;
+
+            // Maximum number of trips a truck can make per day
+            const maxTripsPerTruck = Math.floor((gunlukCalismaSuresi * 60) / tripDuration);
+
+            // Number of trucks needed (rounded up)
+            const numberOfTrucks = Math.ceil(totalTripCount / maxTripsPerTruck);
+
+            // Display results in HTML
+            resultDiv.innerHTML = `
+                <h3>Calculation Results</h3>
+                <p><strong>Required Mixture Quantity:</strong> ${mixtureQuantity.toFixed(2)} tons</p>
+                <p><strong>Hourly Mixture Quantity:</strong> ${hourlyMixtureQuantity.toFixed(2)} tons/hour</p>
+                <p class="highlight-result"><strong>Number of Trucks Needed:</strong> ${numberOfTrucks}</p>
+                <p><strong>Total Truck Trip Count:</strong> ${totalTripCount.toFixed(2)} trips</p>
+                <p><strong>Time Required for One Truck Trip:</strong> ${tripDuration.toFixed(2)} minutes</p>
+                <p><strong>Daily Trips per Truck:</strong> ${maxTripsPerTruck} trips</p>
+                <p><strong>Layer Information:</strong> Thickness=${tabakaKalinligi.toFixed(2)} cm, Width=${tabakaGenisligi.toFixed(2)} m, Density=${yogunluk.toFixed(2)} tons/m³</p>
+            `;
+        }
+    </script>
+</body>
+</html>
