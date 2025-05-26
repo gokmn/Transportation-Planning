@@ -1,0 +1,16 @@
+{
+  "name": "Transportation Planning",
+  "short_name": "TransportCalc",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f0f2f5",
+  "theme_color": "#28a745",
+  "description": "Asphalt transportation planning tool.",
+  "icons": [
+    {
+      "src": "https://www.svgrepo.com/show/183941/dump-truck-truck.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    }
+  ]
+}
